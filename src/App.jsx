@@ -1,5 +1,7 @@
+import TrainingCalendarPage from "~/pages/TrainingCalendarPage";
+
 function App() {
-  return <div className="bg-red-500">This is tailwind</div>;
+  return <TrainingCalendarPage />;
 }
 
 export default App;
