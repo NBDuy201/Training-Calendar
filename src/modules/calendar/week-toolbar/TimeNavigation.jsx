@@ -21,7 +21,7 @@ const TimeNavigation = ({
         title={today}
         onClick={goToToday}
       >
-        Hôm nay
+        Today
       </BasicButton>
 
       <BasicButton

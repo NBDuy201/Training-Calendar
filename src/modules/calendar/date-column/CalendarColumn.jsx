@@ -1,10 +1,12 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
+import React from "react";
 import DateContainer from "./DateContainer";
 import DateHeader from "./DateHeader";
 
-const CalendarColumn = ({ day = {} }) => {
+const CalendarColumn = ({ day = {}, ...props }, ref) => {
   return (
-    <div>
+    <div ref={ref} className="flex flex-col" {...props}>
       <DateHeader day={day} />
       {/* Date container */}
       <DateContainer day={day} />
@@ -12,4 +14,4 @@ const CalendarColumn = ({ day = {} }) => {
   );
 };
 
-export default CalendarColumn;
+export default React.forwardRef(CalendarColumn);

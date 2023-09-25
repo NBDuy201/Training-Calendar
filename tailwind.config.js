@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+const pagePaddingY = "1.5rem";
+const pagePaddingX = "1rem";
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -7,6 +10,10 @@ export default {
         primary: "#7874c5",
         secondary: "#b8c0c6",
         background: "#f6f7f9",
+      },
+      spacing: {
+        pagePaddingY,
+        pagePaddingX,
       },
     },
   },
