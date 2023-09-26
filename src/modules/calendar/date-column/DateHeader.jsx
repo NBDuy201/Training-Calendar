@@ -8,8 +8,8 @@ const DateHeader = ({ day = {} }) => {
       key={day.dateStamp}
       className={`flex justify-between items-center py-2 px-1 sticky top-0 bg-white`}
     >
-      <p className={`text-sm font-semibold uppercase text-slate-500`}>
-        {day.weekDayName}
+      <p className={`text-sm uppercase text-slate-500`}>
+        <strong>{day.weekDayName}</strong>
       </p>
       <BasicButton className="!p-0 text-secondary border-none">
         <FaPlusCircle />

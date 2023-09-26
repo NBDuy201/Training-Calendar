@@ -16,12 +16,8 @@ const DateContainer = ({
       ${isDraggingOver ? "bg-hover" : ""}`}
     >
       {/* Date */}
-      <p
-        className={`text-xs font-extrabold ${
-          isToday ? "text-primary" : "text-secondary "
-        }`}
-      >
-        {day.date}
+      <p className={`${isToday ? "text-primary" : "text-secondary "}`}>
+        <strong>{day.date}</strong>
       </p>
       {/* Exercises containers */}
       {sessionsData?.map((session, index) => (
