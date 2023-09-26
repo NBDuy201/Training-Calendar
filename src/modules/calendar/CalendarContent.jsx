@@ -2,18 +2,30 @@ import moment from "moment";
 import React from "react";
 import { getAllDaysInTheWeek } from "~/utils/dateHelper";
 import CalendarColumn from "./date-column/CalendarColumn";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { DragDropContext } from "react-beautiful-dnd";
+import { sessionsApi } from "~/api/sessionsApi";
+import { useDispatch } from "react-redux";
+import { updateSession } from "~/redux-toolkit/sessionSlice";
+import { useSelector } from "react-redux";
+import { columnApi } from "~/api/columnApi";
 
 const CalendarContent = () => {
   const [stateCalendar, setStateCalendar] = React.useState({
-    startDate: +moment(),
+    startDate: moment(),
     weekDays: getAllDaysInTheWeek(moment()),
     eventStart: null,
     eventEnd: null,
   });
 
+  const dispatch = useDispatch();
+  const sessions = useSelector((state) => state.sessions);
+  console.log(
+    "🚀 ~ file: CalendarContent.jsx:22 ~ CalendarContent ~ sessions:",
+    sessions
+  );
+
   function handleDragDrop(results) {
-    // console.log("🚀 ~ file: Home.jsx:16 ~ Home ~ results:", results);
+    console.log("🚀 ~ file: Home.jsx:16 ~ Home ~ results:", results);
     const { destination, source, type } = results;
 
     if (
@@ -24,13 +36,23 @@ const CalendarContent = () => {
     }
 
     // Move item
-    // let movedWorkouts = moveItem(sortedData, source.index, destination.index);
-    // let updatedWorkouts =
-    //   movedWorkouts?.map((item, index) => ({
-    //     ...item,
-    //     index: index,
-    //   })) ?? [];
-    // setSortedData(updatedWorkouts);
+    const oldPos = {
+      index: source.index,
+      columnId: parseInt(source.droppableId),
+    };
+    const newPos = {
+      index: destination.index,
+      columnId: parseInt(destination.droppableId),
+    };
+    const updatedData = {
+      columnId: newPos.columnId,
+      sessions: sessionsApi.moveSession(
+        columnApi.getColById(sessions, parseInt(destination.droppableId)),
+        oldPos,
+        newPos
+      ),
+    };
+    dispatch(updateSession(updatedData));
 
     // Update workout req for BE
     // let tmpWorkouts = addWorkout(
@@ -45,19 +67,11 @@ const CalendarContent = () => {
     <div className="grid grid-cols-7 gap-x-3 w-full mt-4 flex-1">
       <DragDropContext onDragEnd={handleDragDrop}>
         {stateCalendar?.weekDays.map((day) => (
-          <Droppable
+          <CalendarColumn
             key={day.dateStamp}
-            droppableId={day.dateStamp?.toString()}
-            type="group"
-          >
-            {(provided) => (
-              <CalendarColumn
-                day={day}
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-              />
-            )}
-          </Droppable>
+            day={day}
+            columnId={day.dateStamp}
+          />
         ))}
       </DragDropContext>
     </div>

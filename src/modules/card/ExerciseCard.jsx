@@ -1,12 +1,15 @@
-const ExerciseCard = () => {
+/* eslint-disable react/prop-types */
+const ExerciseCard = ({ exercise = {} }) => {
   return (
     <div className="exercise shadow-md mb-2 flex items-end flex-col p-2">
-      <p>Exercise 1</p>
-      <div className="flex justify-between w-full text-secondary">
+      <p>{exercise.name}</p>
+      <div className="flex justify-between items-center gap-x-5 w-full text-secondary">
         <span>
-          <strong>3x</strong>
+          <strong>{exercise?.infomation?.length}x</strong>
         </span>
-        <span>30lb x6</span>
+        <span className="text-sm truncate">
+          {exercise?.infomation?.join(", ")}
+        </span>
       </div>
     </div>
   );
