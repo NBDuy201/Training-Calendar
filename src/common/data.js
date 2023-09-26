@@ -53,7 +53,7 @@ export const data = [
         exercises: [
           {
             id: uuidv4(),
-            name: "Exercise test",
+            name: "Exercise test dsa dsad asd sadsad",
             infomation: ["50lb x 9"],
           },
         ],

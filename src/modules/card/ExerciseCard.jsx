@@ -9,7 +9,7 @@ const ExerciseCard = ({ exercise = {}, className = "", ...props }, ref) => {
       className={`exercise shadow-md mb-2 flex items-end flex-col p-2 bg-white ${className}`}
       {...props}
     >
-      <p>{exercise.name}</p>
+      <p className="font-bold truncate max-w-full pl-[20%]">{exercise.name}</p>
       <div className="flex justify-between items-center gap-x-5 w-full text-secondary">
         <span>
           <strong>{exercise?.infomation?.length}x</strong>

@@ -3,7 +3,11 @@ import CalendarColumn from "./date-column/CalendarColumn";
 import { DragDropContext } from "react-beautiful-dnd";
 import { sessionsApi } from "~/api/sessionsApi";
 import { useDispatch } from "react-redux";
-import { updateExercise, updateSession } from "~/redux-toolkit/sessionSlice";
+import {
+  addSession,
+  updateExercise,
+  updateSession,
+} from "~/redux-toolkit/sessionSlice";
 import { useSelector } from "react-redux";
 import { columnApi } from "~/api/columnApi";
 import { DRAG_TYPE } from "~/common/constants";
@@ -42,7 +46,7 @@ const CalendarContent = ({ stateCalendar = {} }) => {
     const isChangeIndex = oldPos.index !== newPos.index;
 
     return {
-      isChanged: !isChangeCol && !isChangeIndex,
+      isChanged: isChangeCol || isChangeIndex,
       data: {
         isChangeCol,
         destinationSessions,
@@ -65,7 +69,7 @@ const CalendarContent = ({ stateCalendar = {} }) => {
       },
     } = checkDnDSessionsChanges(destination, source);
 
-    if (isChanged) {
+    if (!isChanged) {
       return;
     }
 
@@ -98,7 +102,15 @@ const CalendarContent = ({ stateCalendar = {} }) => {
       ),
     };
     dispatch(updateSession(newSourceSessions));
-    dispatch(updateSession(newDestinationSessions));
+    // dispatch(updateSession(newDestinationSessions));
+    dispatch(
+      destinationSessions?.length > 0
+        ? updateSession(newDestinationSessions)
+        : addSession({
+            columnId: newDestinationSessions.columnId,
+            sessions: [sourceSessions[oldPos.index]],
+          })
+    );
     console.log("🚀 ~ Source:", newSourceSessions);
     console.log("🚀 ~ Destination:", newDestinationSessions);
   }

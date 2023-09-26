@@ -5,14 +5,27 @@ export const sessionSlice = createSlice({
   name: "sessions",
   initialState: data,
   reducers: {
+    addSession: (state, action) => {
+      const {
+        payload: { columnId, sessions },
+      } = action;
+      const indexCol = state.findIndex((item) => item.columnId === columnId);
+      // Push new column data
+      if (indexCol === -1) {
+        state.push({ columnId, sessions: sessions });
+        return;
+      }
+      // Append data to exist column
+      state[indexCol].sessions = [...state[indexCol].sessions, ...sessions];
+    },
     updateSession: (state, action) => {
       const { payload } = action;
       // Update sessions array when meet same columnId
-      state.forEach((col) =>
+      state.forEach((col) => {
         col.columnId === payload.columnId
           ? (col.sessions = payload.sessions)
-          : col.sessions
-      );
+          : col.sessions;
+      });
     },
     updateExercise: (state, action) => {
       const { payload } = action;
@@ -33,10 +46,10 @@ export const sessionSlice = createSlice({
         }
       });
     },
-    // moveExercise: (state, action) => {},
   },
 });
 
-export const { updateSession, updateExercise } = sessionSlice.actions;
+export const { updateSession, updateExercise, addSession } =
+  sessionSlice.actions;
 
 export default sessionSlice.reducer;
