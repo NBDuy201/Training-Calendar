@@ -5,10 +5,10 @@ import DateHeader from "./DateHeader";
 import React from "react";
 import { useSelector } from "react-redux";
 import { columnApi } from "~/api/columnApi";
-import { DRAG_TYPE } from "~/common/constants";
+import { DRAG_TYPE, REDUX_STATE } from "~/common/constants";
 
 const CalendarColumn = ({ day = {} }) => {
-  const sessions = useSelector((state) => state.sessions);
+  const sessions = useSelector((state) => state[REDUX_STATE.CALENDAR]);
   const sessionsData = React.useMemo(() => {
     return columnApi.getColById(sessions, day.dateStamp);
     // eslint-disable-next-line react-hooks/exhaustive-deps

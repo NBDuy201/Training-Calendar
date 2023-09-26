@@ -7,15 +7,15 @@ import {
   addSession,
   updateExercise,
   updateSession,
-} from "~/redux-toolkit/sessionSlice";
+} from "~/redux-toolkit/calendarSlice";
 import { useSelector } from "react-redux";
 import { columnApi } from "~/api/columnApi";
-import { DRAG_TYPE } from "~/common/constants";
+import { DRAG_TYPE, REDUX_STATE } from "~/common/constants";
 import { exerciseApi } from "~/api/exerciseApi";
 
 const CalendarContent = ({ stateCalendar = {} }) => {
   const dispatch = useDispatch();
-  const sessions = useSelector((state) => state.sessions);
+  const sessions = useSelector((state) => state[REDUX_STATE.CALENDAR]);
   console.log(
     "🚀 ~ file: CalendarContent.jsx:22 ~ CalendarContent ~ sessions:",
     sessions

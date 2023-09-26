@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { REDUX_STATE } from "~/common/constants";
 import { data } from "~/common/data";
 
-export const sessionSlice = createSlice({
-  name: "sessions",
+export const calendarSlice = createSlice({
+  name: REDUX_STATE.CALENDAR,
   initialState: data,
   reducers: {
     addSession: (state, action) => {
@@ -50,6 +51,6 @@ export const sessionSlice = createSlice({
 });
 
 export const { updateSession, updateExercise, addSession } =
-  sessionSlice.actions;
+  calendarSlice.actions;
 
-export default sessionSlice.reducer;
+export default calendarSlice.reducer;

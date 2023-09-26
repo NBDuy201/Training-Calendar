@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import sessionReducer from "./sessionSlice";
+import calendarSlice from "./calendarSlice";
+import { REDUX_STATE } from "~/common/constants";
 
 export const store = configureStore({
   reducer: {
-    sessions: sessionReducer,
+    [REDUX_STATE.CALENDAR]: calendarSlice,
   },
 });
