@@ -1,6 +1,4 @@
-import moment from "moment";
-import React from "react";
-import { getAllDaysInTheWeek } from "~/utils/dateHelper";
+/* eslint-disable react/prop-types */
 import CalendarColumn from "./date-column/CalendarColumn";
 import { DragDropContext } from "react-beautiful-dnd";
 import { sessionsApi } from "~/api/sessionsApi";
@@ -11,14 +9,7 @@ import { columnApi } from "~/api/columnApi";
 import { DRAG_TYPE } from "~/common/constants";
 import { exerciseApi } from "~/api/exerciseApi";
 
-const CalendarContent = () => {
-  const [stateCalendar, setStateCalendar] = React.useState({
-    startDate: moment(),
-    weekDays: getAllDaysInTheWeek(moment()),
-    eventStart: null,
-    eventEnd: null,
-  });
-
+const CalendarContent = ({ stateCalendar = {} }) => {
   const dispatch = useDispatch();
   const sessions = useSelector((state) => state.sessions);
   console.log(

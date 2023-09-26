@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export const data = [
   {
-    columnId: 1695488400000,
+    columnId: 1695574800000,
     sessions: [
       {
         id: uuidv4(),
@@ -28,7 +28,7 @@ export const data = [
     ],
   },
   {
-    columnId: 1695574800000,
+    columnId: 1695661200000,
     sessions: [
       {
         id: uuidv4(),
@@ -42,6 +42,22 @@ export const data = [
         ],
       },
       { id: uuidv4(), title: "title 3", exercises: [] },
+    ],
+  },
+  {
+    columnId: 1695920400000,
+    sessions: [
+      {
+        id: uuidv4(),
+        title: "title 5",
+        exercises: [
+          {
+            id: uuidv4(),
+            name: "Exercise test",
+            infomation: ["50lb x 9"],
+          },
+        ],
+      },
     ],
   },
 ];

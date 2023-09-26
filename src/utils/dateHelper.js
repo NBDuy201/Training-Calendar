@@ -1,7 +1,7 @@
 import moment from "moment";
 
 export function getAllDaysInTheWeek(currentDate = moment()) {
-  const weekStart = currentDate.clone().startOf("week");
+  const weekStart = currentDate.clone().startOf("week").add(1, "day");
 
   const days = Array.from(Array(7))
     .map((day, index) => index)
@@ -24,4 +24,22 @@ export function isTodaysDate(dateStamp) {
     moment.duration(dateStamp.diff(today)).days() === 0 &&
     today.day() === dateStamp.day()
   );
+}
+
+export function getAllDaysInNextWeek(startDate) {
+  const nextWeekDate = moment(startDate).add(7, "days");
+
+  return {
+    nextWeekDate,
+    weekDays: getAllDaysInTheWeek(nextWeekDate),
+  };
+}
+
+export function getAllDaysInLastWeek(startDate) {
+  const lastWeekDate = moment(startDate).subtract(7, "days");
+
+  return {
+    lastWeekDate,
+    weekDays: getAllDaysInTheWeek(lastWeekDate),
+  };
 }
