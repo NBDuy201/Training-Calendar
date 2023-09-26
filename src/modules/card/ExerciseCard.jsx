@@ -1,7 +1,14 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
-const ExerciseCard = ({ exercise = {} }) => {
+import React from "react";
+
+const ExerciseCard = ({ exercise = {}, className = "", ...props }, ref) => {
   return (
-    <div className="exercise shadow-md mb-2 flex items-end flex-col p-2">
+    <div
+      ref={ref}
+      className={`exercise shadow-md mb-2 flex items-end flex-col p-2 bg-white ${className}`}
+      {...props}
+    >
       <p>{exercise.name}</p>
       <div className="flex justify-between items-center gap-x-5 w-full text-secondary">
         <span>
@@ -15,4 +22,4 @@ const ExerciseCard = ({ exercise = {} }) => {
   );
 };
 
-export default ExerciseCard;
+export default React.forwardRef(ExerciseCard);

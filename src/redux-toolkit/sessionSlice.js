@@ -14,10 +14,29 @@ export const sessionSlice = createSlice({
           : col.sessions
       );
     },
+    updateExercise: (state, action) => {
+      const { payload } = action;
+      // console.log("🚀 ~ file: sessionSlice.js:19 ~ payload:", payload);
+      state.forEach((col) => {
+        if (col?.columnId === payload?.columnId) {
+          // Update exercises array when meet same sessionId
+          col?.sessions?.forEach((session) => {
+            // console.log(
+            //   "🚀 ~ file: sessionSlice.js:24 ~ col?.sessions?.forEach ~ session:",
+            //   current(session),
+            //   current(session)?.id === payload.sessionId
+            // );
+            return session?.id === payload.sessionId
+              ? (session.exercises = payload.exercises)
+              : session.exercises;
+          });
+        }
+      });
+    },
     // moveExercise: (state, action) => {},
   },
 });
 
-export const { updateSession, moveExercise } = sessionSlice.actions;
+export const { updateSession, updateExercise } = sessionSlice.actions;
 
 export default sessionSlice.reducer;

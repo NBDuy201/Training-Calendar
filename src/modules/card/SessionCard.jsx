@@ -5,10 +5,15 @@ import { FaPlusCircle } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import BasicButton from "~/components/button/BasicButton";
 import ExerciseCard from "./ExerciseCard";
+import { Draggable, Droppable } from "react-beautiful-dnd";
+import { DRAG_TYPE } from "~/common/constants";
 
 const iconBtnClass = "border-none !p-0 text-secondary hover:opacity-50";
 
-const SessionCard = ({ title = "", exercises = [], ...props }, ref) => {
+const SessionCard = (
+  { sessionId = "", title = "", exercises = [], ...props },
+  ref
+) => {
   return (
     <div
       ref={ref}
@@ -21,9 +26,33 @@ const SessionCard = ({ title = "", exercises = [], ...props }, ref) => {
           <BsThreeDots />
         </BasicButton>
       </div>
-      {exercises?.map((exercise) => (
-        <ExerciseCard key={exercise.id} exercise={exercise} />
-      ))}
+      <Droppable droppableId={sessionId} type={DRAG_TYPE.EXERCISE}>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            className={snapshot.isDraggingOver ? "bg-hover" : ""}
+          >
+            {exercises?.map((exercise, index) => (
+              <Draggable
+                key={exercise.id}
+                draggableId={exercise.id?.toString()}
+                index={index}
+              >
+                {(provided, snapshot) => (
+                  <ExerciseCard
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    exercise={exercise}
+                  />
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
       <BasicButton className={`${iconBtnClass} self-end mt-1`}>
         <FaPlusCircle />
       </BasicButton>

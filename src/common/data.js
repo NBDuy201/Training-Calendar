@@ -18,6 +18,11 @@ export const data = [
             name: "Exercise 2",
             infomation: ["50lb x 9", "40 lb x 7", "40 lb x 7", "40 lb x 7"],
           },
+          {
+            id: uuidv4(),
+            name: "Exercise 4",
+            infomation: ["50lb x 9", "40 lb x 7", "40 lb x 7", "40 lb x 7"],
+          },
         ],
       },
     ],
@@ -30,7 +35,7 @@ export const data = [
         title: "title 2",
         exercises: [
           {
-            id: "ex3",
+            id: uuidv4(),
             name: "Exercise 3",
             infomation: ["50lb x 9"],
           },

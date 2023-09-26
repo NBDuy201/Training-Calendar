@@ -3,11 +3,18 @@ import { isTodaysDate } from "~/utils/dateHelper";
 import SessionCard from "~/modules/card/SessionCard";
 import { Draggable } from "react-beautiful-dnd";
 
-const DateContainer = ({ day = {}, sessionsData = [] }) => {
+const DateContainer = ({
+  day = {},
+  sessionsData = [],
+  isDraggingOver = false,
+}) => {
   const isToday = isTodaysDate(day.dateStamp);
 
   return (
-    <div className={`bg-background p-2 rounded-md h-full`}>
+    <div
+      className={`bg-background p-2 rounded-md h-full 
+      ${isDraggingOver ? "bg-hover" : ""}`}
+    >
       {/* Date */}
       <p
         className={`text-xs font-extrabold ${
@@ -21,13 +28,12 @@ const DateContainer = ({ day = {}, sessionsData = [] }) => {
         <Draggable
           key={session.id}
           draggableId={session.id?.toString()}
-          // key={uuidv4()}
-          // draggableId={uuidv4()}
           index={index}
         >
-          {(provided, snapshot) => (
+          {(provided) => (
             <SessionCard
               title={session.title}
+              sessionId={`${day.dateStamp}_${session.id}`}
               exercises={session.exercises}
               ref={provided.innerRef}
               {...provided.draggableProps}

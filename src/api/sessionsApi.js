@@ -1,33 +1,31 @@
-function moveItem(arr = [], from = 0, to = 0) {
-  let res = [...arr];
-  let fromItem = res.splice(from, 1)[0]; // remove 'from' item + store it
-  res.splice(to, 0, fromItem); // insert stored 'from' item
+import { insertItem, moveItem, removeItem } from "~/utils/arrayHelper";
 
-  return res;
+function getSessionById(sessions = [], sessionId = "") {
+  return sessions.find((session) => session.id === sessionId);
 }
 
 function moveSession(sessionsData = [], oldPosition = {}, newPosition = {}) {
-  // const isChangeCol = oldPosition.columnId !== newPosition.columnId;
-  const isChangeIndex = oldPosition.index !== newPosition.index;
-
-  // if (isChangeCol) {
-  //   let movedWorkouts = moveItem(sortedData, source.index, destination.index);
-  //   let updatedWorkouts =
-  //     movedWorkouts?.map((item, index) => ({
-  //       ...item,
-  //       index: index,
-  //     })) ?? [];
-  //   setSortedData(updatedWorkouts);
-  // }
-
-  if (isChangeIndex) {
-    let movedSessions = moveItem(
-      sessionsData,
-      oldPosition.index,
-      newPosition.index
-    );
-    return movedSessions;
-  }
+  let movedSessions = moveItem(
+    sessionsData,
+    oldPosition.index,
+    newPosition.index
+  );
+  return movedSessions;
 }
 
-export const sessionsApi = { moveSession };
+function deleteSession(sessionsData = [], session = {}) {
+  let res = removeItem(sessionsData, session, "id");
+  return res;
+}
+
+function insertSession(sessionsData = [], toIndex = 0, session = {}) {
+  let res = insertItem(sessionsData, toIndex, session);
+  return res;
+}
+
+export const sessionsApi = {
+  moveSession,
+  deleteSession,
+  insertSession,
+  getSessionById,
+};

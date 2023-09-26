@@ -5,6 +5,7 @@ import DateHeader from "./DateHeader";
 import React from "react";
 import { useSelector } from "react-redux";
 import { columnApi } from "~/api/columnApi";
+import { DRAG_TYPE } from "~/common/constants";
 
 const CalendarColumn = ({ day = {} }) => {
   const sessions = useSelector((state) => state.sessions);
@@ -20,7 +21,7 @@ const CalendarColumn = ({ day = {} }) => {
       <Droppable
         key={day.dateStamp}
         droppableId={day.dateStamp?.toString()}
-        type="group"
+        type={DRAG_TYPE.SESSION}
       >
         {(provided, snapshot) => (
           <div
@@ -28,7 +29,11 @@ const CalendarColumn = ({ day = {} }) => {
             className="flex-1"
             {...provided.droppableProps}
           >
-            <DateContainer day={day} sessionsData={sessionsData} />
+            <DateContainer
+              day={day}
+              sessionsData={sessionsData}
+              isDraggingOver={snapshot.isDraggingOver}
+            />
             {provided.placeholder}
           </div>
         )}
