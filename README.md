@@ -33,4 +33,4 @@ Training Calendar with Vite + React, can drag and drop elements
     
 ## Demo
 
-[Demo link](nbduy201.github.io/Training-Calendar/)
+[Demo link](https://nbduy201.github.io/Training-Calendar/)
