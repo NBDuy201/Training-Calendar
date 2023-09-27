@@ -85,6 +85,7 @@ const AddExerciseModal = ({
       reqData
     );
     dispatch(addExercise(reqData));
+    handleResetForm();
     closeModal();
   }
 
