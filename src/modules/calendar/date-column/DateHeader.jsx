@@ -1,8 +1,16 @@
 /* eslint-disable react/prop-types */
 import BasicButton from "~/components/button/BasicButton";
 import { FaPlusCircle } from "react-icons/fa";
+import { useSessionContext } from "~/context/sessionContext";
 
 const DateHeader = ({ day = {} }) => {
+  const { openAddSession, setColumnId } = useSessionContext();
+
+  function handleOpenSessionModal() {
+    openAddSession();
+    setColumnId(day.dateStamp);
+  }
+
   return (
     <div
       key={day.dateStamp}
@@ -11,7 +19,10 @@ const DateHeader = ({ day = {} }) => {
       <p className={`text-sm uppercase text-slate-500`}>
         <strong>{day.weekDayName}</strong>
       </p>
-      <BasicButton className="!p-0 text-secondary border-none">
+      <BasicButton
+        onClick={handleOpenSessionModal}
+        className="!p-0 text-secondary border-none"
+      >
         <FaPlusCircle />
       </BasicButton>
     </div>

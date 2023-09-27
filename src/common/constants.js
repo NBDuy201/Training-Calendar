@@ -16,4 +16,8 @@ export const SCHEMA_FIELD_NAME = {
     NAME: "name",
     SETS: "sets",
   },
+
+  SESSION_SCHEMA: {
+    TITLE: "title",
+  },
 };

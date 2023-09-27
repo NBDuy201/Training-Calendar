@@ -12,6 +12,7 @@ const BasicTextBox = ({
   labelClass = "",
   wrapperClass = "",
   hideErrMsg = false,
+  placeholder = "",
   ...props
 }) => {
   const { field } = useController({
@@ -30,7 +31,8 @@ const BasicTextBox = ({
       <label className={`font-medium text-black ${labelClass}`}>{label}</label>
       {type === "textArea" ? (
         <textarea
-          className={`focus:ring-0 
+          placeholder={placeholder}
+          className={`focus:ring-0
           ${className}
           ${errors ? errBorderClass : "border-slate-400"}`}
           {...props}
@@ -39,6 +41,7 @@ const BasicTextBox = ({
       ) : (
         <input
           type={type}
+          placeholder={placeholder}
           className={`focus:ring-0 
           ${className}
           ${errors ? errBorderClass : "border-slate-400"}`}

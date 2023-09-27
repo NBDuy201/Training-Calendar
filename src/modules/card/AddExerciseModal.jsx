@@ -12,6 +12,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { addExercise } from "~/redux-toolkit/calendarSlice";
+import BasicModal from "~/components/modal/BasicModal";
 
 export const MAX_ANS = 10;
 export const MIN_ANS = 1;
@@ -32,6 +33,7 @@ const AddExerciseModal = ({
   closeModal = () => {},
   isOpen = false,
   sessionInfo = {},
+  setSessionInfo = () => {},
 }) => {
   // Form
   const {
@@ -88,6 +90,7 @@ const AddExerciseModal = ({
 
   function handleResetForm() {
     reset(defSchemaVal);
+    setSessionInfo(null);
   }
 
   React.useEffect(() => {
@@ -98,99 +101,102 @@ const AddExerciseModal = ({
   }, [isOpen]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-[400px]">
-      <h2 className="mx-auto text-center mb-6">Add Exercise</h2>
-      {/* Exercise name field */}
-      <BasicTextBox
-        label="Name"
-        control={control}
-        name={EXERCISE_NAME_FIELD}
-        autoComplete="off"
-        errors={
-          errors[EXERCISE_NAME_FIELD]
-            ? errors[EXERCISE_NAME_FIELD]?.message
-            : null
-        }
-        defaultValue={getValues(EXERCISE_NAME_FIELD)}
-        className="w-full px-4 py-2 outline-none border rounded-md border-slate-400 
-          focus:border-black focus:font-medium focus:text-black transition-all"
-        wrapperClass="w-full mb-4"
-      />
+    <BasicModal open={isOpen} handleClose={closeModal}>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-[400px]">
+        <h2 className="mx-auto text-center mb-2 font-bold">Add Exercise</h2>
+        {/* Exercise name field */}
+        <BasicTextBox
+          label="Name"
+          control={control}
+          name={EXERCISE_NAME_FIELD}
+          autoComplete="off"
+          errors={
+            errors[EXERCISE_NAME_FIELD]
+              ? errors[EXERCISE_NAME_FIELD]?.message
+              : null
+          }
+          defaultValue={getValues(EXERCISE_NAME_FIELD)}
+          className="w-full px-4 py-2 outline-none border rounded-md border-secondary
+          focus:border-black focus:text-black transition-all"
+          wrapperClass="w-full mb-4"
+        />
 
-      {/* Exercise sets fields */}
-      <label className={`font-medium text-black`}>Exercises</label>
-      {fields.map((item, index) => {
-        return (
-          <div
-            key={item.id}
-            className="flex gap-x-2 items-center relative mb-2"
-          >
-            <BasicTextBox
-              control={control}
-              name={`${EXERCISE_SETS_FIELD}[${index}][${EXERCISE_SINGLE_SET_FIELD}]`}
-              autoComplete="off"
-              errors={
-                errors[EXERCISE_SETS_FIELD]
-                  ? errors[EXERCISE_SETS_FIELD][index]
+        {/* Exercise sets fields */}
+        <label className={`font-medium text-black`}>Exercises</label>
+        {fields.map((item, index) => {
+          return (
+            <div
+              key={item.id}
+              className="flex gap-x-2 items-center relative mb-2"
+            >
+              <BasicTextBox
+                control={control}
+                name={`${EXERCISE_SETS_FIELD}[${index}][${EXERCISE_SINGLE_SET_FIELD}]`}
+                autoComplete="off"
+                errors={
+                  errors[EXERCISE_SETS_FIELD]
                     ? errors[EXERCISE_SETS_FIELD][index]
-                      ? errors[EXERCISE_SETS_FIELD][index][
-                          EXERCISE_SINGLE_SET_FIELD
-                        ]?.message
+                      ? errors[EXERCISE_SETS_FIELD][index]
+                        ? errors[EXERCISE_SETS_FIELD][index][
+                            EXERCISE_SINGLE_SET_FIELD
+                          ]?.message
+                        : null
                       : null
                     : null
-                  : null
-              }
-              defaultValue={getValues(
-                `${EXERCISE_SETS_FIELD}[${index}][${EXERCISE_SINGLE_SET_FIELD}]`
-              )}
-              className="w-full px-4 py-2 outline-none border rounded-md border-slate-400
-                focus:border-black focus:font-medium focus:text-black transition-all"
-              wrapperClass="w-full"
-            />
+                }
+                defaultValue={getValues(
+                  `${EXERCISE_SETS_FIELD}[${index}][${EXERCISE_SINGLE_SET_FIELD}]`
+                )}
+                className="w-full px-4 py-2 outline-none border rounded-md border-secondary
+                focus:border-black focus:text-black transition-all"
+                wrapperClass="w-full"
+              />
 
-            {/* Remove ans btn */}
-            <BasicButton
-              type="button"
-              onClick={() => handleRemoveExercise(index)}
-              className={`!p-0 border-none text-xl absolute top-[0.7rem] right-2 text-secondary hover:text-hover
+              {/* Remove ans btn */}
+              <BasicButton
+                type="button"
+                onClick={() => handleRemoveExercise(index)}
+                className={`!p-0 border-none text-xl absolute top-[0.7rem] right-2 text-secondary hover:text-hover
                 ${isMinAns ? "hidden" : ""}
                 `}
-            >
-              {/* <Close /> */}
-              <AiFillCloseCircle />
-            </BasicButton>
-          </div>
-        );
-      })}
+              >
+                {/* <Close /> */}
+                <AiFillCloseCircle />
+              </BasicButton>
+            </div>
+          );
+        })}
 
-      {/* Add more ans btn */}
-      <BasicButton
-        type="button"
-        onClick={handleAddExercise}
-        className={`mb-4 !p-2 border border-slate-400 rounded-md w-full flex items-center hover:opacity-70
-          justify-center gap-x-1 text-slate-400 ${isMaxAns ? "!hidden" : ""}`}
-      >
-        {/* <AddCircle /> */}
-        <IoMdAddCircleOutline className="text-xl" />
-        <span>Add exercises</span>
-      </BasicButton>
-      <div className="flex justify-center gap-x-2">
+        {/* Add more ans btn */}
         <BasicButton
           type="button"
-          onClick={closeModal}
-          className="!px-3 !py-2 font-semibold hover:opacity-60"
+          onClick={handleAddExercise}
+          className={`mb-4 !p-2 border border-slate-400 rounded-md w-full flex items-center hover:opacity-70
+          justify-center gap-x-1 text-slate-400 ${isMaxAns ? "!hidden" : ""}`}
         >
-          Cancel
+          {/* <AddCircle /> */}
+          <IoMdAddCircleOutline className="text-xl" />
+          <span>Add exercises</span>
         </BasicButton>
-        <BasicButton
-          disabled={!isValid}
-          type="submit"
-          className="!px-3 !py-2 bg-primary text-white font-semibold hover:opacity-60"
-        >
-          Submit
-        </BasicButton>
-      </div>
-    </form>
+        <div className="flex justify-center gap-x-2">
+          <BasicButton
+            type="button"
+            onClick={closeModal}
+            className="!px-3 !py-2 font-semibold hover:opacity-60"
+          >
+            Cancel
+          </BasicButton>
+          <BasicButton
+            disabled={!isValid}
+            type="submit"
+            className={`!px-3 !py-2 bg-primary text-white font-semibold
+          ${!isValid ? "cursor-not-allowed" : "hover:opacity-60"}`}
+          >
+            Submit
+          </BasicButton>
+        </div>
+      </form>
+    </BasicModal>
   );
 };
 

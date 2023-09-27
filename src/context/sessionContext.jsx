@@ -4,18 +4,33 @@ import usePopup from "~/hooks/usePopup";
 const SessionContext = React.createContext();
 function SessionProvider(props) {
   const [sessionInfo, setSessionInfo] = React.useState(null);
+  const [columnId, setColumnId] = React.useState(null);
   const {
     open: isOpenAddExercise,
     handleClosePopup: closeAddExercise,
     handleOpenPopup: openAddExercise,
   } = usePopup();
+  const {
+    open: isOpenAddSession,
+    handleClosePopup: closeAddSession,
+    handleOpenPopup: openAddSession,
+  } = usePopup();
 
   const value = {
+    // Exercise modal
     isOpenAddExercise,
     closeAddExercise,
     openAddExercise,
+
+    // Session modal
+    isOpenAddSession,
+    closeAddSession,
+    openAddSession,
+
     sessionInfo,
     setSessionInfo,
+    columnId,
+    setColumnId,
   };
 
   return (

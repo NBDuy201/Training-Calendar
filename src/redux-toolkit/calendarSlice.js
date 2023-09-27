@@ -13,7 +13,7 @@ export const calendarSlice = createSlice({
       const indexCol = state.findIndex((item) => item.columnId === columnId);
       // Push new column data
       if (indexCol === -1) {
-        state.push({ columnId, sessions: sessions });
+        state.push({ columnId, sessions: sessions ?? [] });
         return;
       }
       // Append data to exist column

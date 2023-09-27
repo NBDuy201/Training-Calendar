@@ -1,16 +1,26 @@
 /* eslint-disable react/prop-types */
 import CalendarColumn from "./date-column/CalendarColumn";
 import { DragDropContext } from "react-beautiful-dnd";
-import BasicModal from "~/components/modal/BasicModal";
 import useDnD from "~/hooks/useDnD";
 import AddExerciseModal from "../card/AddExerciseModal";
 import { useSessionContext } from "~/context/sessionContext";
+import AddSessionModal from "./date-column/AddSessionModal";
 
 const CalendarContent = ({ stateCalendar = {} }) => {
   const { handleDragDrop } = useDnD();
 
-  const { isOpenAddExercise, closeAddExercise, sessionInfo } =
-    useSessionContext();
+  const {
+    isOpenAddExercise,
+    closeAddExercise,
+    sessionInfo,
+
+    // Session modal
+    isOpenAddSession,
+    closeAddSession,
+
+    columnId,
+    setColumnId,
+  } = useSessionContext();
 
   return (
     <div className="grid grid-cols-7 gap-x-3 w-full mt-4 flex-1">
@@ -23,13 +33,17 @@ const CalendarContent = ({ stateCalendar = {} }) => {
           />
         ))}
       </DragDropContext>
-      <BasicModal open={isOpenAddExercise} handleClose={closeAddExercise}>
-        <AddExerciseModal
-          isOpen={isOpenAddExercise}
-          closeModal={closeAddExercise}
-          sessionInfo={sessionInfo}
-        />
-      </BasicModal>
+      <AddExerciseModal
+        isOpen={isOpenAddExercise}
+        closeModal={closeAddExercise}
+        sessionInfo={sessionInfo}
+      />
+      <AddSessionModal
+        isOpen={isOpenAddSession}
+        closeModal={closeAddSession}
+        columnId={columnId}
+        setColumnId={setColumnId}
+      />
     </div>
   );
 };
