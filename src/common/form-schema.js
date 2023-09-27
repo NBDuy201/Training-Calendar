@@ -4,7 +4,8 @@ import { SCHEMA_FIELD_NAME } from "./constants";
 const singleExerciseSchema = {
   [SCHEMA_FIELD_NAME.SINGLE_EXERCISE_SCHEMA.SET]: yup
     .string()
-    .required("Please enter set informaation"),
+    .required("Please enter set informaation")
+    .default(""),
 };
 
 export const exerciseSchema = yup.object({

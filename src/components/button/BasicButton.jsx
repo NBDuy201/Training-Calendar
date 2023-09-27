@@ -4,6 +4,7 @@ const BasicButton = ({
   type = "button",
   className = "",
   onClick = () => {},
+  disabled = false,
   children,
   ...props
 }) => {
@@ -11,7 +12,10 @@ const BasicButton = ({
     <button
       type={type}
       onClick={onClick}
-      className={`border border-secondary p-3 rounded-md ${className}`}
+      disabled={disabled}
+      className={`border border-secondary p-3 rounded-md 
+      ${disabled ? "opacity-50" : ""}
+      ${className}`}
       {...props}
     >
       {children}
