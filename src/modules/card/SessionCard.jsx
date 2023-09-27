@@ -7,6 +7,7 @@ import BasicButton from "~/components/button/BasicButton";
 import ExerciseCard from "./ExerciseCard";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { DRAG_TYPE } from "~/common/constants";
+import { useSessionContext } from "~/context/sessionContext";
 
 const iconBtnClass = "border-none !p-0 text-secondary hover:opacity-50";
 
@@ -14,6 +15,18 @@ const SessionCard = (
   { sessionId = "", title = "", exercises = [], ...props },
   ref
 ) => {
+  const { openAddExercise, setSessionInfo } = useSessionContext();
+
+  function handleOpenAddExercise() {
+    openAddExercise();
+    const [columnId, onlySessionId] = sessionId.split("_");
+    const sessionInfo = {
+      columnId,
+      sessionId: onlySessionId,
+    };
+    setSessionInfo(sessionInfo);
+  }
+
   return (
     <div
       ref={ref}
@@ -39,7 +52,7 @@ const SessionCard = (
                 draggableId={exercise.id?.toString()}
                 index={index}
               >
-                {(provided, snapshot) => (
+                {(provided) => (
                   <ExerciseCard
                     ref={provided.innerRef}
                     {...provided.draggableProps}
@@ -53,7 +66,10 @@ const SessionCard = (
           </div>
         )}
       </Droppable>
-      <BasicButton className={`${iconBtnClass} self-end mt-1`}>
+      <BasicButton
+        onClick={handleOpenAddExercise}
+        className={`${iconBtnClass} self-end mt-1`}
+      >
         <FaPlusCircle />
       </BasicButton>
     </div>

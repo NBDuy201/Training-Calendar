@@ -1,3 +1,4 @@
+import { SessionProvider } from "~/context/sessionContext";
 import useCalendar from "~/hooks/useCalendar";
 import CalendarContent from "~/modules/calendar/CalendarContent";
 import WeekToolbar from "~/modules/calendar/week-toolbar/WeekToolbar";
@@ -14,7 +15,9 @@ const TrainingCalendarPage = () => {
         goToToday={goToToday}
         startDate={stateCalendar.startDate}
       />
-      <CalendarContent stateCalendar={stateCalendar} />
+      <SessionProvider>
+        <CalendarContent stateCalendar={stateCalendar} />
+      </SessionProvider>
     </div>
   );
 };

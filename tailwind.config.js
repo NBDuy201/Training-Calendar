@@ -4,6 +4,7 @@ const pagePaddingX = "1rem";
 
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  important: "#root",
   theme: {
     extend: {
       colors: {

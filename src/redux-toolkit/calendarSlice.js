@@ -47,10 +47,37 @@ export const calendarSlice = createSlice({
         }
       });
     },
+    addExercise: (state, action) => {
+      const {
+        payload: { columnId, sessionId, id, name, sets },
+      } = action;
+
+      // Find column by id
+      const columnIndex = state.findIndex((item) => item.columnId === columnId);
+      if (columnIndex === -1) {
+        console.log("no column");
+        return;
+      }
+
+      // Find session in column by id
+      const sessionIndex = state[columnIndex].sessions.findIndex((session) => {
+        return session.id === sessionId;
+      });
+      if (sessionIndex === -1) {
+        console.log("no session");
+        return;
+      }
+
+      state[columnIndex].sessions[sessionIndex].exercises.push({
+        id,
+        name,
+        infomation: sets,
+      });
+    },
   },
 });
 
-export const { updateSession, updateExercise, addSession } =
+export const { updateSession, updateExercise, addSession, addExercise } =
   calendarSlice.actions;
 
 export default calendarSlice.reducer;
